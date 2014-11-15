@@ -1,0 +1,11 @@
+Source: dreal
+Section: devel
+Priority: optional
+Maintainer: Soonho Kong <soonhok@cs.cmu.edu>
+Build-Depends: autoconf, automake, bison, flex, git, libtool, make, cmake, pkg-config, g++-4.8, build-essential
+Homepage: http://dreal.github.io
+
+Package: dreal
+Architecture: any
+Depends: libstdc++-4.8-dev
+Description: dReal SMT Solver and related tools
