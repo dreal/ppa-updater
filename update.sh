@@ -56,8 +56,6 @@ do
 
     echo "=== 4. Build OCaml Tools"
     make -C ${REPO}/tools
-    mv ${REPO}/tools/_build/bmc/src/bmc_main.native ${REPO}/bin/bmc_main.native
-    rm -rf ${REPO}/tools/_build
 
     echo "=== 5. ${REPO}_${VERSION}.orig.tar.gz"
     tar -acf ${REPO}_${VERSION}.orig.tar.gz --exclude ${REPO}/.git ${REPO}
