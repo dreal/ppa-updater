@@ -6,14 +6,18 @@
 # Author: Soonho Kong
 #
 #             12.04  14.04  14.10
+set -e  # Abort if any command fails
+UPDT_PATH="`dirname \"$0\"`"
+UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
+cd $UPDT_PATH
 DIST_LIST="precise trusty utopic"
 ORG=dreal
 REPO=dreal
 URGENCY=medium
 AUTHOR_NAME="Soonho Kong"
 AUTHOR_EMAIL="soonhok@cs.cmu.edu"
-EXTERNAL_PROJECT_ROOT=https://github.com/soonhokong
-EXTERNAL_PROJECTS="filibxx capdDynSys-3.0 gflags glog gtest json11"
+EXTERNAL_PROJECT_ROOT=https://github.com/dreal-deps
+EXTERNAL_PROJECTS="filibxx capdDynSys-4.0 gflags glog googletest json11"
 
 if [ ! -d $REPO ] ; then
     git clone git@github.com:${ORG}/${REPO}
@@ -40,7 +44,7 @@ do
     echo "=== 2. Download external projects"
     for EXTERNAL in ${EXTERNAL_PROJECTS}
     do
-        if [ ! -e ${REPO}/src/${EXTERNAL}.zip ] ; then
+        if [ -e ${REPO}/src/${EXTERNAL}.zip ] ; then
             rm -- ${REPO}/src/${EXTERNAL}.zip
         fi
         wget ${EXTERNAL_PROJECT_ROOT}/${EXTERNAL}/archive/master.zip -O ${REPO}/src/${EXTERNAL}.zip
@@ -48,11 +52,11 @@ do
     done
 
     echo "=== 3. Replace ${REPO}/src/CMakeLists.txt with ${REPO}/src/CMakeLists.ppa.txt"
-    mv ${REPO}/src/CMakeLists.ppa.txt ${REPO}/src/CMakeLists.txt
+    cp ${REPO}/src/CMakeLists.ppa.txt ${REPO}/src/CMakeLists.txt
 
     echo "=== 4. Build OCaml Tools"
     make -C ${REPO}/tools
-    mv ${REPO}/tools/_build/bmc/src/bmc_main.native ${REPO}/bin/bmc
+    mv ${REPO}/tools/_build/bmc/src/bmc_main.native ${REPO}/bin/bmc_main.native
     rm -rf ${REPO}/tools/_build
 
     echo "=== 5. ${REPO}_${VERSION}.orig.tar.gz"
