@@ -1,11 +1,11 @@
-Source: dreal
+Source: dreal3
 Section: devel
 Priority: optional
 Maintainer: Soonho Kong <soonhok@cs.cmu.edu>
-Build-Depends: autoconf, automake, bison, flex, git, libtool, make, cmake, pkg-config, g++-4.8, build-essential
+Build-Depends: autoconf, automake, bison, flex, git, libtool, make, cmake, pkg-config, g++-4.8, build-essential, libpython2.7, python2.7, python
 Homepage: http://dreal.github.io
 
-Package: dreal
+Package: dreal3
 Architecture: any
-Depends: libstdc++-4.8-dev
+Depends: libstdc++-4.8-dev, libpython2.7, python2.7, python
 Description: dReal SMT Solver and related tools

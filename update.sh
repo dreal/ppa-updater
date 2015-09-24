@@ -10,14 +10,14 @@ set -e  # Abort if any command fails
 UPDT_PATH="`dirname \"$0\"`"
 UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
 cd $UPDT_PATH
-DIST_LIST="precise trusty utopic"
+DIST_LIST="precise trusty vivid"
 ORG=dreal
-REPO=dreal
+REPO=dreal3
 URGENCY=medium
 AUTHOR_NAME="Soonho Kong"
 AUTHOR_EMAIL="soonhok@cs.cmu.edu"
 EXTERNAL_PROJECT_ROOT=https://github.com/dreal-deps
-EXTERNAL_PROJECTS="filibxx capdDynSys-4.0 gflags glog googletest json11"
+EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json"
 
 if [ ! -d $REPO ] ; then
     git clone git@github.com:${ORG}/${REPO}
@@ -42,28 +42,26 @@ do
     cp -r debian ${REPO}/debian
 
     echo "=== 2. Download external projects"
+    mkdir -p ${REPO}/src/third_party
     for EXTERNAL in ${EXTERNAL_PROJECTS}
     do
-        if [ -e ${REPO}/src/${EXTERNAL}.zip ] ; then
-            rm -- ${REPO}/src/${EXTERNAL}.zip
+        if [ -e ${REPO}/src/third_party/${EXTERNAL}.zip ] ; then
+            rm -- ${REPO}/src/third_party/${EXTERNAL}.zip
         fi
-        wget ${EXTERNAL_PROJECT_ROOT}/${EXTERNAL}/archive/master.zip -O ${REPO}/src/${EXTERNAL}.zip
+        wget ${EXTERNAL_PROJECT_ROOT}/${EXTERNAL}/archive/master.zip -O ${REPO}/src/third_party/${EXTERNAL}.zip
         echo "=== ${EXTERNAL_PROJECT_ROOT}/${EXTERNAL}/archive/master.zip"
     done
 
-    echo "=== 3. Replace ${REPO}/src/CMakeLists.txt with ${REPO}/src/CMakeLists.ppa.txt"
-    cp ${REPO}/src/CMakeLists.ppa.txt ${REPO}/src/CMakeLists.txt
-
-    echo "=== 4. Build OCaml Tools"
+    echo "=== 3. Build OCaml Tools"
     make -C ${REPO}/tools
 
-    echo "=== 5. ${REPO}_${VERSION}.orig.tar.gz"
+    echo "=== 4. ${REPO}_${VERSION}.orig.tar.gz"
     tar -acf ${REPO}_${VERSION}.orig.tar.gz --exclude ${REPO}/.git ${REPO}
     cd ${REPO}
     debuild -S -sa
     cd ..
 
-    echo "=== 6. Upload: ${REPO}_${VERSION}_source.changes"
+    echo "=== 5. Upload: ${REPO}_${VERSION}_source.changes"
     dput -f ppa:${ORG}/${REPO} ${REPO}_${VERSION}_source.changes
     rm -- ${REPO}_*
     rm -rf -- ${REPO}/debian debian/changelog
