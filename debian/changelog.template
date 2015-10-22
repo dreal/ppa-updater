@@ -1,4 +1,4 @@
-##REPO## (##VERSION##) ##DIST##; urgency=##URGENCY##
+##PKG_NAME## (##VERSION##) ##DIST##; urgency=##URGENCY##
 
   * ##COMMIT_MESSAGE##
 

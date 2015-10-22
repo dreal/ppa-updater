@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2014 Carnegie Mellon University. All rights reserved.
+# Copyright (c) 2014 - 2015 Carnegie Mellon University. All rights reserved.
 # Released under Apache 2.0 license as described in the file LICENSE.
 #
 # Author: Soonho Kong
 #
-#             12.04  14.04  14.10
+#             12.04  14.04  15.04
 set -e  # Abort if any command fails
 UPDT_PATH="`dirname \"$0\"`"
 UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
 cd $UPDT_PATH
-DIST_LIST="precise trusty vivid"
+DIST_LIST="precise"
+#DIST_LIST="precise trusty vivid"
 ORG=dreal
 REPO=dreal3
+PPA_NAME=dreal
+PKG_NAME=dreal
 URGENCY=medium
 AUTHOR_NAME="Soonho Kong"
 AUTHOR_EMAIL="soonhok@cs.cmu.edu"
 EXTERNAL_PROJECT_ROOT=https://github.com/dreal-deps
-EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json"
+EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json gsl-1.16"
 
 if [ ! -d $REPO ] ; then
     git clone git@github.com:${ORG}/${REPO}
@@ -31,7 +34,7 @@ do
     echo "=== 1. Create debian/changelog file"
     VERSION=`./get_version.sh ${REPO} ${DATETIME} ${DIST}`
     cp debian/changelog.template                               debian/changelog
-    sed -i "s/##REPO##/${REPO}/g"                              debian/changelog
+    sed -i "s/##PKG_NAME##/${PKG_NAME}/g"                      debian/changelog
     sed -i "s/##VERSION##/${VERSION}/g"                        debian/changelog
     sed -i "s/##DIST##/${DIST}/g"                              debian/changelog
     sed -i "s/##URGENCY##/${URGENCY}/g"                        debian/changelog
@@ -55,15 +58,15 @@ do
     echo "=== 3. Build OCaml Tools"
     make -C ${REPO}/tools
 
-    echo "=== 4. ${REPO}_${VERSION}.orig.tar.gz"
-    tar -acf ${REPO}_${VERSION}.orig.tar.gz --exclude ${REPO}/.git ${REPO}
+    echo "=== 4. ${PKG_NAME}_${VERSION}.orig.tar.gz"
+    tar -acf ${PKG_NAME}_${VERSION}.orig.tar.gz --exclude ${REPO}/.git ${REPO}
     cd ${REPO}
     debuild -S -sa
     cd ..
 
-    echo "=== 5. Upload: ${REPO}_${VERSION}_source.changes"
-    dput -f ppa:${ORG}/${REPO} ${REPO}_${VERSION}_source.changes
-    rm -- ${REPO}_*
+    echo "=== 5. Upload: ${PKG_NAME}_${VERSION}_source.changes"
+    dput -f ppa:${ORG}/${PPA_NAME} ${PKG_NAME}_${VERSION}_source.changes
+    rm -- ${PKG_NAME}_*
     rm -rf -- ${REPO}/debian debian/changelog
     rm ${REPO}/bin/bmc
 done
