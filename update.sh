@@ -5,12 +5,12 @@
 #
 # Author: Soonho Kong
 #
-#             12.04  14.04  15.04
+#             12.04  14.04  15.04  15.10
 set -e  # Abort if any command fails
 UPDT_PATH="`dirname \"$0\"`"
 UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
 cd $UPDT_PATH
-DIST_LIST="precise trusty vivid"
+DIST_LIST="precise trusty vivid wily"
 ORG=dreal
 REPO=dreal3
 PPA_NAME=dreal
@@ -66,6 +66,7 @@ if [[ $DOIT == TRUE ]] ; then
         sed -i "s/##AUTHOR_NAME##/${AUTHOR_NAME}/g"                debian/changelog
         sed -i "s/##AUTHOR_EMAIL##/${AUTHOR_EMAIL}/g"              debian/changelog
         sed -i "s/##DATE_STRING##/${DATE_STRING}/g"                debian/changelog
+        rm -rf ${REPO}/debian
         cp -r debian ${REPO}/debian
 
         echo "=== 2. Download external projects"
