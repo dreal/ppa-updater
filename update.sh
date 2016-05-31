@@ -81,6 +81,7 @@ if [[ $DOIT == TRUE ]] ; then
         done
 
         echo "=== 3. Build OCaml Tools"
+        make -C ${REPO}/tools dist-clean
         make -C ${REPO}/tools
 
         echo "=== 4. ${PKG_NAME}_${VERSION}.orig.tar.gz"
