@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2014 - 2015 Carnegie Mellon University. All rights reserved.
+# Copyright (c) 2014 - 2016 Carnegie Mellon University. All rights reserved.
 # Released under Apache 2.0 license as described in the file LICENSE.
 #
-# Author: Soonho Kong
+# Author: Soonho Kong <soonhok@cs.cmu.edu>
 #
 
 usage() {
@@ -44,9 +44,11 @@ elif [[ ${DIST} == vivid ]] ; then
     DIST_VER=15.04
 elif [[ ${DIST} == wily ]] ; then
     DIST_VER=15.10
+elif [[ ${DIST} == xenial ]] ; then
+    DIST_VER=16.04
 else 
     usage;
-    echo "Wrong distro name ${DIST}: we support 'precise', 'trusty', 'vivid', and 'wily'"
+    echo "Wrong distro name ${DIST}: we support 'precise', 'trusty', 'wily' and 'xenial'"
     exit 1
 fi
 

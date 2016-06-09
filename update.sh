@@ -5,12 +5,12 @@
 #
 # Author: Soonho Kong
 #
-#             12.04  14.04  15.04  15.10
 set -e  # Abort if any command fails
 UPDT_PATH="`dirname \"$0\"`"
 UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
 cd $UPDT_PATH
-DIST_LIST="precise trusty vivid wily"
+#          12.04   14.04  15.10 16.04
+DIST_LIST="precise trusty wily  xenial"
 ORG=dreal
 REPO=dreal3
 PPA_NAME=dreal
