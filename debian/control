@@ -7,5 +7,5 @@ Homepage: http://dreal.github.io
 
 Package: dreal
 Architecture: any
-Depends: libstdc++-4.9-dev, libpython2.7, python2.7, python
+Depends: libstdc++-4.9-dev, libpython2.7, python2.7, python, libglpk-dev
 Description: dReal SMT Solver and related tools

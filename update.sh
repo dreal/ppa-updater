@@ -19,7 +19,7 @@ URGENCY=medium
 AUTHOR_NAME="Soonho Kong"
 AUTHOR_EMAIL="soonhok@cs.cmu.edu"
 EXTERNAL_PROJECT_ROOT=https://github.com/dreal-deps
-EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json gsl Z3 glpk"
+EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json gsl Z3 picosat adept"
 
 # Check out lean if it's not here and update PREVIOUS_HASH
 if [ ! -d ./${REPO} ] ; then
