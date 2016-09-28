@@ -9,8 +9,8 @@ set -e  # Abort if any command fails
 UPDT_PATH="`dirname \"$0\"`"
 UPDT_PATH="`( cd \"$UPDT_PATH\" && pwd )`"
 cd $UPDT_PATH
-#          12.04   14.04  15.10 16.04
-DIST_LIST="precise trusty wily  xenial"
+#          14.04  15.10 16.04
+DIST_LIST="trusty wily  xenial"
 ORG=dreal
 REPO=dreal3
 PPA_NAME=dreal
@@ -19,11 +19,11 @@ URGENCY=medium
 AUTHOR_NAME="Soonho Kong"
 AUTHOR_EMAIL="soonhok@cs.cmu.edu"
 EXTERNAL_PROJECT_ROOT=https://github.com/dreal-deps
-EXTERNAL_PROJECTS="filibxx nlopt capdDynSys-4.0 clp-1.16 ibex-lib Catch easyloggingpp ezoptionparser json gsl Z3 picosat adept"
+EXTERNAL_PROJECTS="filibxx capdDynSys-4.0 ibex-lib Catch easyloggingpp ezoptionparser json Z3 picosat adept"
 
 # Check out lean if it's not here and update PREVIOUS_HASH
 if [ ! -d ./${REPO} ] ; then
-    git clone ${GIT_REMOTE_REPO}
+    git clone https://github.com/${ORG}/${REPO}
     DOIT=TRUE
     cd ${REPO}
     git rev-parse HEAD > PREVIOUS_HASH
